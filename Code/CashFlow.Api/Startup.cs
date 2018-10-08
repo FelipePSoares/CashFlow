@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using CashFlow.Data;
+using CashFlow.Domain.Repository;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -43,6 +45,12 @@ namespace CashFlow.Api
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+
+            var host = Configuration[Constants.QueueManager.Host];
+            var user = Configuration[Constants.QueueManager.User];
+            var password = Configuration[Constants.QueueManager.Password];
+
+            services.AddScoped<IQueueManager>((serviceProvider) => new QueueManager(host, user, password));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
