@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  cashflow.api:
+    image: ${DOCKER_REGISTRY}cashflowapi
+    build:
+      context: .
+      dockerfile: CashFlow.Api/Dockerfile
